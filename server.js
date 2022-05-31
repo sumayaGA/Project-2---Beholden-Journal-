@@ -4,6 +4,7 @@ const express = require("express");
 const session = require("express-session");
 const mongoose = require("mongoose");
 const userController = require("./controllers/users");
+const sessionsController = require("./controllers/sessions");
 const app = express();
 
 
@@ -30,6 +31,7 @@ app.use(
 
 //Controllers
 app.use("/users", userController);
+app.use("/sessions", sessionsController);
 
 
 //Listener
