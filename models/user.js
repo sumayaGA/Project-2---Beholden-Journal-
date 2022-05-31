@@ -1,5 +1,5 @@
 //Dependencies
-const mongoose = require("mongoos");
+const mongoose = require("mongoose");
 
 //Declare User Schema
 const userSchema = new mongoose.Schema ({
