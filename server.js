@@ -5,6 +5,8 @@ const session = require("express-session");
 const mongoose = require("mongoose");
 const userController = require("./controllers/users");
 const sessionsController = require("./controllers/sessions");
+const journalController = require("./controllers/journal");
+const methodOverride = require("method-override");
 const app = express();
 
 
@@ -20,10 +22,10 @@ db.on('error', (err) => console.log(err.message + ' is mongo not running?'));
 db.on('connected', () => console.log('mongo connected'));
 db.on('disconnected', () => console.log('mongo disconnected'));
 
-//Index 
-app.get("/", (req,res)=>{
-    res.render("index.ejs")
-})
+//Static Files
+app.use(express.static("public"));
+app.use("/css", express.static(__dirname + "public/css"));
+
 //Middleware + Body Parser
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -32,10 +34,26 @@ app.use(
         resave: false,
         saveUninitialized: false
     }));
+app.use(methodOverride("_method"));
+
+//Index 
+app.get('/', (req, res) => {
+    if(req.session.currentUser) {
+    
+	    res.render('dashboard.ejs', {
+            currentUser: req.session.currentUser
+    });
+    } else {
+        res.render("index.ejs", {
+            currentUser: req.session.currentUser
+        });
+    };
+});
 
 //Controllers
 app.use("/users", userController);
 app.use("/sessions", sessionsController);
+app.use("/journal", journalController);
 
 
 //Listener
