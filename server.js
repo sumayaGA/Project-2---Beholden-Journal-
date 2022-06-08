@@ -36,6 +36,11 @@ app.use(
     }));
 app.use(methodOverride("_method"));
 
+//Controllers
+app.use("/users", userController);
+app.use("/sessions", sessionsController);
+app.use("/journal", journalController);
+
 //Index 
 app.get('/', (req, res) => {
     if(req.session.currentUser) {
@@ -50,10 +55,7 @@ app.get('/', (req, res) => {
     };
 });
 
-//Controllers
-app.use("/users", userController);
-app.use("/sessions", sessionsController);
-app.use("/journal", journalController);
+
 
 
 //Listener
