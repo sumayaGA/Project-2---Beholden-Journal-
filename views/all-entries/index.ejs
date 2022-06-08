@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Journal Entries</title>
+</head>
+<body>
+    <nav>
+        <a href="/">DASHBOARD</a>
+    </nav>
+    <h1>All Journal Entries</h1>
+    <ul>
+        <% journals.forEach(journal=> { %>
+            <li>
+            <a href="/journal/<%=journal._id; %>"><%=journal.title;%></a>
+            <%=journal.content; %>
+            <%=journal.date; %>
+
+            <form action="/journal/<%= journal.id %>?_method=DELETE" method="POST">
+                <input type="submit" value="X" />
+             </form>
+             <a href="/journal/<%=journal._id%>/edit"><input type ="submit" value = "EDIT"/></a>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>
